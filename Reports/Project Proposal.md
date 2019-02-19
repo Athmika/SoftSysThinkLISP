@@ -4,7 +4,7 @@ Team members: Abigail Fry, Hyegi Karen Bang and Athmika Senthilkumar
 
 **Goal of our project**: 
 
-Out MVP for this project is to create a minimal lisp interpreter in C.
+Our MVP for this project is to create a minimal lisp interpreter in C.
 
  + Our MVP should be able to accurately carryout all comparison and numerical lisp operations.  For example, (+ 1 2 3) should evaluate to 6,  (- -3) should evaluate to 3,  (= 11 11) should evaluate to true,  (> 1 11) should evaluate to false and so on.
 
