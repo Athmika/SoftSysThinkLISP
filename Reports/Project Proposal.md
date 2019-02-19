@@ -1,4 +1,4 @@
-											Lisp Interpreter
+			Lisp Interpreter
 
 Team members: Abigail Fry, Hyegi Karen Bang and Athmika Senthilkumar
 
@@ -31,11 +31,14 @@ We also plan on attending Ninja Hours regularly and consulting our Ninjas for he
 **First Steps**:
 
 **STEP-1**:  Understand how Lisp expressions function. We consider this step done when we can come up up at least 15 test cases that can thoroughly demonstrate the working of our MVP. 
+
 Assigned to: Athmika
 
 **STEP-2**: Read through the first chapter of ‘Build your own Lisp’. We can consider this done, when we discuss topics from the first chapter at a team meeting. 
+
 Assigned to: Hyegi
 
 **STEP-3**: Implement one numerical operator. We can consider this done when an input like (+ 1 2) works. 
+
 Assigned to: Abigail
 
