@@ -12,10 +12,10 @@ Our MVP for this project is to create a minimal lisp interpreter in C.
 
  + Our MVP should also be able to evaluate conditional expressions that take this form: (if (condition) (action1) (action2)). 
 
-Out stretch goal is to include additional lisp functionality like processing loops and handling logical operations.  
+Our stretch goal is to include additional lisp functionality like processing loops and handling logical operations.  
 
 **Learning goals**: 
-We hope to get more comfortable with C syntax and C coding practices. We want to explore how an interpreted language like lisp functions on a system level in comparison with C  And as we work on this project, we also hope to develop good practices for coding in a team, that includes maintaining an up to date trello and using GitHub effectively. 
+We hope to get more comfortable with C syntax and C coding practices. We also want to explore how an interpreted language like lisp functions on a system level in comparison with C.
 
 **Resources**: 
 
