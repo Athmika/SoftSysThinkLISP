@@ -15,16 +15,34 @@ char* read_input(){
 
 int evaluate(char* input){
   //function does numerical evaluation
-  if (*(input) != '('){
-    input = input + 2; //after checking input, increment by 1
+  if (*(input++) != '('){ //check value of input, check for open paren, increment by 1
     printf("ERROR: Input must begin with a '('\n");
-    return 0;
   }
-  //char* operator = *[input]
-  return 0;
+  char* operator = *(input++); //read the operator
+
+  int result = 0;
+  switch (operator) {
+    case ADD:
+      result = compute_ADD(input);
+      break;
+    default: break;
+  }
 }
 
+int compute_ADD(char* input){
+  int sum = 0;
 
+  while (*input != ')') {
+    if (*input == ' '){
+      input++;
+      continue;
+    }
+    int a = 0;
+    scanf(input++, "%d",&a);
+    sum += a;
+  }
+  return sum;
+}
 
 int main(int argc, char*argv[]){
   while (1){
@@ -32,4 +50,10 @@ int main(int argc, char*argv[]){
   }
 
   return 0;
+}
+
+
+int main(int argc, char* argv[]) {
+
+    return 0;
 }
