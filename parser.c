@@ -25,8 +25,8 @@ int evaluate(char* input){
   }
 
   printf("Hello Hyegi2");
-  *input = *(input++)
-  char* operator = *input; //read the operator
+  *input = *(input++);
+  char operator = *input; //read the operator
   int result = 0;
   switch (operator) {
     case ADD:
@@ -56,7 +56,7 @@ int compute_ADD(char* input){
       continue;
     }
     int a = atoi(input);
-    printf("hello")
+    printf("hello");
     // scanf(input++, "%d",&a);
     sum += a;
   }
