@@ -6,6 +6,35 @@ Implemnting an interactive prompt.
 #include <stdlib.h>
 #include <string.h>
 
+int cond(char* input)
+{
+
+  char* firstsubstr = malloc(3*sizeof(char));
+  strncpy(firstsubstr, (input+1), 2);
+
+  char* secondsubstr = malloc(15*sizeof(char));
+
+  strncpy(secondsubstr, (input+3), strlen(input)-3);
+
+  //printf("%s\n", substr);
+  //char firstChar = input[0];
+  if (strcmp(firstsubstr,"if") == 0) {
+    int i = 0;
+    while (isspace(secondsubstr[0]) || secondsubstr[0] == '(')
+    {
+      secondsubstr = secondsubstr + 1;
+      i =+ 1;
+      //nextChar = secondsubstr[i];
+    }
+
+    printf("%s\n",secondsubstr);
+
+    char cmpOperator = secondsubstr[0];
+
+  }
+
+return 0;
+}
 
 int main(int argc, char** argv) {
 
@@ -65,7 +94,9 @@ int main(int argc, char** argv) {
   //Loop prints out all the inputs
   while(numInputs>0)
   {
-      printf("%s\n", inputs[i]);
+
+    cond(inputs[i]);
+      //printf("%s\n", inputs[i]);
        i++;
        numInputs--;
   }
