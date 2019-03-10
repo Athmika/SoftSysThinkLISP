@@ -20,6 +20,7 @@ int cond(char* input)
   //char firstChar = input[0];
   if (strcmp(firstsubstr,"if") == 0) {
     int i = 0;
+    //skip forward until you hit the first comparator operator
     while (isspace(secondsubstr[0]) || secondsubstr[0] == '(')
     {
       secondsubstr = secondsubstr + 1;
@@ -27,9 +28,27 @@ int cond(char* input)
       //nextChar = secondsubstr[i];
     }
 
-    printf("%s\n",secondsubstr);
-
     char cmpOperator = secondsubstr[0];
+
+    //need to error check to make sure these are actually ints
+    int num1 = secondsubstr[2]-'0';
+    int num2 = secondsubstr[4]-'0';
+
+    if (cmpOperator == '<')
+    {
+        if (num1 < num2) {printf("true\n");}
+    }
+    else if (cmpOperator == '>')
+    {
+        if (num1 > num2) {printf("true\n");}
+    }
+    else if (cmpOperator == '=')
+    {
+        if (num1 == num2) {printf("true\n");}
+    }
+    else{
+        printf("Invalid comparision operator");
+     }
 
   }
 
