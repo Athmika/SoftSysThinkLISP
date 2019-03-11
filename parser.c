@@ -17,30 +17,36 @@ char* read_input(){
 }
 
 int evaluate(char* input){
-  printf("Hello Hyegi1");
   //function does numerical evaluation
   if (*(input++) != '('){ //check value of input, check for open paren, increment by 1
     printf("ERROR: Input must begin with a '('\n");
-    exit(1);
+    printf("ERRORRRRRRR");
+    return 0;
   }
 
-  printf("Hello Hyegi2");
   *input = *(input++);
   char operator = *input; //read the operator
+  printf("%c\n",operator);
   int result = 0;
+  printf("pre-switch\n");
   switch (operator) {
     case ADD:
+      printf("at add in switch statment\n");
       result = compute_ADD(input);
+      return result;
       break;
-    case MUL:
-      result = compute_MUL(input);
-      break;
-    case DIV:
-      result = compute_DIV(input);
-      break;
-    case  SUB:
-      result = compute_SUB(input);
-      break;
+    // case MUL:
+    //   result = compute_MUL(input);
+    //   return result;
+    //   break;
+    // case DIV:
+    //   result = compute_DIV(input);
+    //   return result;
+    //   break;
+    // case  SUB:
+    //   result = compute_SUB(input);
+    //   return result;
+    //   break;
     default:
       printf("ERROR--NO OPERATOR PROVIDED");
       break;
@@ -49,71 +55,72 @@ int evaluate(char* input){
 
 int compute_ADD(char* input){
   int sum = 0;
-
+  printf("compute\n");
   while (*input != ')') {
-    if (*input == ' '){
-      input++;
-      continue;
+    if (*input == ' ')  {
+      printf("in if\n");
+      input++; //continue;
     }
-    int a = atoi(input);
-    printf("hello");
-    // scanf(input++, "%d",&a);
-    sum += a;
+
+    printf("moved on\n");
+    int a = 0;
+    scanf(input++, "%d",&a);
   }
-  return sum;
-}
+    return sum;
+  }
+    //
+    // int compute_MUL(char* input) {
+    //
+    //     int product = 1; // 1 is neutral for product
+    //
+    //     while (*input != ')') {
+    //         if (*input == ' ') {
+    //             input++; continue;
+    //         }
+    //
+    //         int m = 0;
+    //         sscanf(input++, "%d", &m);
+    //         product *= m;
+    //     }
+    //
+    //     return product;
+    // }
+    //
+    // int compute_DIV(char* input) {
+    //     int  t= 0;
+    //     int n = 0;
+    //
+    //     while(*(++input) == ' ');
+    //
+    //     // first value found
+    //     sscanf(read_input, "%d", &t);
+    //     ++input;
+    //
+    //     while(*(++input) == ' ');
+    //
+    //     // second value found
+    //     sscanf(input, "%d", &n);
+    //
+    //     return t / n;
+    // }
+    //
+    // int compute_SUB(char* input){
+    //   int  f= 0;
+    //   int l = 0;
+    //
+    //   while(*(++input) == ' ');
+    //
+    //   // first value
+    //   sscanf(read_input, "%d", &f);
+    //   ++input;
+    //
+    //   while(*(++input) == ' ');
+    //
+    //   // second value
+    //   sscanf(input, "%d", &l);
+    //   return f-l;
+    // }
 
-int compute_MUL(char* input) {
-
-    int product = 1; // 1 is neutral for product
-
-    while (*input != ')') {
-        if (*input == ' ') {
-            input++; continue;
-        }
-
-        int m = 0;
-        sscanf(input++, "%d", &m);
-        product *= m;
-    }
-
-    return product;
-}
-
-int compute_DIV(char* input) {
-    int  t= 0;
-    int n = 0;
-
-    while(*(++input) == ' ');
-
-    // first value found
-    sscanf(read_input, "%d", &t);
-    ++input;
-
-    while(*(++input) == ' ');
-
-    // second value found
-    sscanf(input, "%d", &n);
-
-    return t / n;
-}
-
-int compute_SUB(char* input){
-  int  f= 0;
-  int l = 0;
-
-  while(*(++input) == ' ');
-
-  // first value
-  sscanf(read_input, "%d", &f);
-  ++input;
-
-  while(*(++input) == ' ');
-
-  // second value
-  sscanf(input, "%d", &l);
-  return f-l;
-}
 
 int main(int argc, char* argv[]) {
   while (1) {
