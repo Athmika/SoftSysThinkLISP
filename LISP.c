@@ -3,9 +3,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-
-//http://leohetsch.com/create-a-minimal-lisp-like-interpreter-in-c/
-
 #define ADD '+'
 #define SUB '-'
 #define MUL '*'
