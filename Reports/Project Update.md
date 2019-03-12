@@ -11,8 +11,7 @@ set the value 5 to the variable y.  Our MVP should also be able to evaluate cond
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Since working on our MVP, we have decided to pivot our stretch goal.  Originally our stretch goal was to to include additional
 lisp functionality like processing loops and handling logical operations.  Instead we have decided to focus on making our 
 basic mathematical operations more robust.  We have finished addition, subtraction, multiplication, and division for multiple
-digits, doing a single operation.  We are interested in being able to compute something more complication like (+ 2(/ 8 (- 8 6)))
-. We think this goal build off of the work we have already done better than our original stretch goal and is one that we 
+digits, doing a single operation.  We are interested in being able to compute something more complication like (+ 2(/ 8 (- 8 6))).We think this goal build off of the work we have already done better than our original stretch goal and is one that we 
 are more interested in pursuing. 
  
 ## Learning Goals 
@@ -28,6 +27,13 @@ of our MVP implementation.  We read the tutorials outlined in the previous repor
 implementing basic LISP interpreters. Then we split up the work individually to work on the prompt, parser and evaluator. 
 The prompt takes in multiple lines of Lisp commands. The parser executes arithmetic expressions.The evaluator uses the
 results of parser to compute nested expressions. The prompt and parser have been successfully implemented. 
+
+The following resources were used for the project: 
++ Tutorialspoint: https://www.tutorialspoint.com/lisp/index.htm
++ Build your own Lisp book: http://www.buildyourownlisp.com/contents
++ Blog on how to create a Lisp interpreter: http://leohetsch.com/create-a-minimal-lisp-like-interpreter-in-c/
++ Geeks For Geeks: https://www.geeksforgeeks.org/
+
  
 ## Current State
 * Include robust error checking to stop the user from evaluating expressions with syntax errors -- Abby 
