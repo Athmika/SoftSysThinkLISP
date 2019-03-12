@@ -4,7 +4,253 @@ Implemnting an interactive prompt.
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
+
+#define ADD '+'
+#define SUB '-'
+#define MUL '*'
+#define DIV '/'
+#define LESS '<'
+#define GREATER '>'
+#define EQUAL '='
+
+float compute_ADD();
+float compute_DIV();
+float compute_MUL();
+float compute_SUB();
+bool cond_LESS();
+bool cond_GREATER();
+bool cond_EQUAL();
+
+int isspace();
+
+typedef enum{
+  FLOAT, BOOLEAN
+} types;
+
+typedef union result{
+  float number;
+  bool conditional;
+}result;
+
+
+
+
+int evaluate(char* input,result* res){
+  //function does numerical evaluation
+  if (*(input++) != '('){ //check value of input, check for open paren, increment by 1
+    printf("ERROR: Input must begin with a '('\n");
+    printf("ERRORRRRRRR");
+    exit(1);
+  }
+
+  *input = *(input++);
+  char operator = *input; //read the operator
+  //bool resultBool;
+  switch (operator) {
+    case ADD:
+      res->number = compute_ADD(input);
+      return 1;
+      break;
+    case MUL:
+      res->number = compute_MUL(input);
+      return 1;
+      break;
+    case DIV:
+      res->number = compute_DIV(input);
+      return 1;
+      break;
+    case  SUB:
+      res->number = compute_SUB(input);
+      return 1;
+      break;
+    case LESS:
+      res->conditional = cond_LESS(input);
+      return 0;
+    case GREATER:
+        res->conditional = cond_GREATER(input);
+        return 0;
+    case EQUAL:
+        res->conditional = cond_EQUAL(input);
+        return 0;
+    default:
+      printf("ERROR--NO OPERATOR PROVIDED");
+      break;
+  }
+}
+
+int checkIfNum(char num)
+{
+  char nums[10] = {'0','1','2','3','4','5','6','7','8','9'};
+  int i = 0;
+  for(i=0;i<10;i++)
+  {
+    if (num == nums[i])
+    {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+bool cond_LESS(char* input)
+{
+  bool result;
+  //printf("%s\n", input);
+  int num1 = input[1]-'0';
+  int num2 = input[3]-'0';
+  if((num1 < num2)){
+   result = true;
+  }
+  else{
+   result = false;
+  }
+  return result;
+}
+
+bool cond_GREATER(char* input)
+{
+  bool result;
+  //printf("%s\n", input);
+  int num1 = input[1]-'0';
+  int num2 = input[3]-'0';
+  if((num1 > num2)){
+   result = true;
+  }
+  else{
+   result = false;
+  }
+  return result;
+}
+
+bool cond_EQUAL(char* input)
+{
+  bool result;
+  //printf("%s\n", input);
+  int num1 = input[1]-'0';
+  int num2 = input[3]-'0';
+  if((num1 == num2)){
+   result = true;
+  }
+  else{
+   result = false;
+  }
+  return result;
+}
+
+
+
+float compute_ADD(char* input){
+  float sum = 0;
+  int i = 0;
+
+  while (input[i] != ')') {
+    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
+      i++;
+    }
+    else{
+      int start = i;
+      int numsize = 0;
+      while(checkIfNum(input[i])==1)
+      {
+        numsize++;
+        i++;
+      }
+      char* numBuffer = malloc(15*sizeof(char));
+      strncpy(numBuffer, (input+start), numsize);
+      float curr = atof(numBuffer);
+      sum = sum + curr;
+      free(numBuffer);
+  }
+  }
+    return sum;
+  }
+
+  float compute_SUB(char* input){
+    float difference = 0;
+    int i = 0;
+    int first = 0;
+    while (input[i] != ')') {
+    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
+      i++;
+    }
+    else{
+      int start = i;
+      int numsize = 0;
+      while(checkIfNum(input[i])==1){
+        numsize++;
+        i++;
+      }
+      char* numBuffer = malloc(15*sizeof(char));
+      strncpy(numBuffer, (input+start), numsize);
+      float curr = atof(numBuffer);
+      if (first != 0)
+        curr = (-1.0)*curr;
+      first = 1;
+      difference = difference + curr;
+      free(numBuffer);
+  }
+  }
+  return difference;
+}
+
+  float compute_MUL(char* input) {
+    float product = 1;
+    int i = 0;
+
+  while (input[i] != ')') {
+    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
+      i++;
+    }
+    else{
+      int start = i;
+      int numsize = 0;
+      while(checkIfNum(input[i])==1)
+      {
+        numsize++;
+        i++;
+      }
+      char* numBuffer = malloc(15*sizeof(char));
+      strncpy(numBuffer, (input+start), numsize);
+      float curr = atof(numBuffer);
+      product = product * curr;
+      free(numBuffer);
+  }
+  }
+  return product;
+}
+
+  float compute_DIV(char* input) {
+    float quotient = 1.0;
+    int i = 0;
+    int first = 0;
+
+    while (input[i] != ')') {
+    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
+      i++;
+    }
+    else{
+      int start = i;
+      int numsize = 0;
+      while(checkIfNum(input[i])==1)
+      {
+        numsize++;
+        i++;
+      }
+      char* numBuffer = malloc(15*sizeof(char));
+      strncpy(numBuffer, (input+start), numsize);
+      float curr = atof(numBuffer);
+      if (first != 0)
+        curr = 1.0 / curr;
+      first = 1;
+      quotient = quotient * curr;
+      free(numBuffer);
+    }
+    }
+    return quotient;
+    }
+
 
 int cond(char* input)
 {
@@ -106,15 +352,30 @@ int main(int argc, char** argv) {
         printf("You cannot enter more than 100 commands\n");
         exit(1);
     }
-
   }
 
   i = 0;
   //Loop prints out all the inputs
+
+  result *res = malloc(sizeof(float));
+  int temp;
   while(numInputs>0)
   {
-
-    cond(inputs[i]);
+    temp = evaluate(inputs[i],res);
+    if (temp == 1){
+      //printf("float");
+      printf("%f\n",res->number);
+    }
+    else if(temp == 0){
+      if (res->conditional)
+      {
+        printf("True\n");
+      }
+      else{
+        printf("False\n");
+      }
+      //printf("%d\n",res->conditional);
+    }
       //printf("%s\n", inputs[i]);
        i++;
        numInputs--;
