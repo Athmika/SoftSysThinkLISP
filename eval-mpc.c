@@ -35,13 +35,30 @@ typedef union result{
 }result;
 
 
-
+char* read_input(){
+//function reads user input and returns pointer to the input string
+  char* input=malloc(25600);
+  printf("lispy-> ");
+  fgets(input, 25600, stdin);
+  return input;
+}
 
 int evaluate(char* input,result* res){
-  //function does numerical evaluation
+  //error checking
   if (*(input++) != '('){ //check value of input, check for open paren, increment by 1
     printf("ERROR: Input must begin with a '('\n");
-    printf("ERRORRRRRRR");
+    exit(1);
+  }
+  if (*(input + 3) != ' '){
+      printf("ERROR: Operator must be follow by a ' '" );
+      exit(1);
+  }
+
+  int c = 0;
+  while (input[c] != '\0')
+    c++;
+  if (input[c-1] != ')'){
+    printf("ERROR: Input must end with a ')'");
     exit(1);
   }
 
@@ -320,7 +337,7 @@ int main(int argc, char** argv) {
     //Error checking to make sure that command size is not greater than 200
     if (strlen(s)>201)
     {
-      printf("Your command cannot be more than 200 characters\n");
+      printf("ERROR: Your command cannot be more than 200 characters\n");
       exit(1);
     }
     inputs[i] = malloc(100 * sizeof(char));
@@ -349,7 +366,7 @@ int main(int argc, char** argv) {
     //Error checking to make sure that the number of commands is not greater than 100
     if (numInputs > 100)
     {
-        printf("You cannot enter more than 100 commands\n");
+        printf("ERROR: You cannot enter more than 100 commands\n");
         exit(1);
     }
   }
@@ -377,10 +394,8 @@ int main(int argc, char** argv) {
       //printf("%d\n",res->conditional);
     }
       //printf("%s\n", inputs[i]);
-       i++;
-       numInputs--;
+      i++;
+      numInputs--;
   }
 
-
-  return 0;
 }

@@ -34,6 +34,8 @@ float evaluate(char* input){
     printf("ERROR: Input must begin with a '('\n");
     printf("ERRORRRRRRR");
     return 0;
+  }else{
+    input++;
   }
 
   *input = *(input++);
