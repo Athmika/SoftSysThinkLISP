@@ -19,7 +19,9 @@ float compute_ADD();
 float compute_DIV();
 float compute_MUL();
 float compute_SUB();
-bool condLESS();
+bool cond_LESS();
+bool cond_GREATER();
+bool cond_EQUAL();
 
 int isspace();
 
@@ -30,7 +32,6 @@ typedef enum{
 typedef union result{
   float number;
   bool conditional;
-  types units;
 }result;
 
 typedef struct{
@@ -40,7 +41,7 @@ typedef struct{
 
 
 
-void evaluate(char* input,temps* res){
+void evaluate(char* input,temps* temp){
   //function does numerical evaluation
   if (*(input++) != '('){ //check value of input, check for open paren, increment by 1
     printf("ERROR: Input must begin with a '('\n");
@@ -53,19 +54,33 @@ void evaluate(char* input,temps* res){
   //bool resultBool;
   switch (operator) {
     case ADD:
-      res->number = compute_ADD(input);
+      temp->results.number = compute_ADD(input);
+      temp->units = FLOAT;
       break;
     case MUL:
-      res->number = compute_MUL(input);
+      temp->results.number = compute_MUL(input);
+      temp->units = FLOAT;
       break;
     case DIV:
-      res->number = compute_DIV(input);
+      temp->results.number = compute_DIV(input);
+      temp->units = FLOAT;
       break;
-    case  SUB:
-      res->number = compute_SUB(input);
+    case SUB:
+      temp->results.number = compute_SUB(input);
+      temp->units = FLOAT;
       break;
     case LESS:
-      res->conditional = condLESS(input);
+      temp->units = BOOLEAN;
+      temp->results.conditional = cond_LESS(input);
+      break;
+    case GREATER:
+      temp->units = BOOLEAN;
+      temp->results.conditional = cond_GREATER(input);
+      break;
+    case EQUAL:
+      temp->units = BOOLEAN;
+      temp->results.conditional = cond_EQUAL(input);
+      break;
     default:
       printf("ERROR--NO OPERATOR PROVIDED");
       break;
@@ -86,13 +101,46 @@ int checkIfNum(char num)
   return 0;
 }
 
-bool condLESS(char* input)
+bool cond_LESS(char* input)
 {
-  bool result;
-  printf("%s\n", input);
+  bool result = true;
   int num1 = input[1]-'0';
   int num2 = input[3]-'0';
   if((num1 < num2)){
+   result = true;
+  }
+  else{
+   result = false;
+  }
+  // printf(result ? "true" : "false");
+
+  return result;
+}
+
+
+bool cond_GREATER(char* input)
+{
+  bool result;
+
+  int num1 = input[1]-'0';
+  int num2 = input[3]-'0';
+  if((num1 > num2)){
+   result = true;
+  }
+  else{
+   result = false;
+  }
+  return result;
+}
+
+bool cond_EQUAL(char* input)
+{
+
+  bool result;
+  //printf("%s\n", input);
+  int num1 = input[1]-'0';
+  int num2 = input[3]-'0';
+  if((num1 == num2)){
    result = true;
   }
   else{
@@ -317,19 +365,23 @@ int main(int argc, char** argv) {
   i = 0;
   //Loop prints out all the inputs
 
-  results *res = malloc(sizeof(float));
-  temps temp = malloc(sizeof(float) * 10 );
+  result *res = malloc(sizeof(float));
+  temps *temp = malloc(sizeof(float) * 10 );
 
   while(numInputs>0)
   {
-    evaluate(inputs[i],res);
-    if (res->units == FLOAT){
-      printf("float");
-      printf("%f\n",res.results.number);
+    evaluate(inputs[i], temp);
+    if (temp->units == BOOLEAN){
+      if(temp->results.conditional = 1)
+          printf("True\n");
+      else
+          printf("False\n" );
     }
-    else if(res->units == BOOLEAN){
-      printf("boolean");
-      printf("%d\n",res.results.number);
+    else if(temp->units == FLOAT){
+      printf("float");
+      printf("%f\n",temp->results.number);
+      printf("%d\n",temp->results.conditional);
+
     }
       //printf("%s\n", inputs[i]);
        i++;
