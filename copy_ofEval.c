@@ -22,6 +22,7 @@ float compute_SUB();
 bool cond_LESS();
 bool cond_GREATER();
 bool cond_EQUAL();
+int checkIfNum(char);
 
 int isspace();
 
@@ -34,19 +35,27 @@ typedef union result{
   bool conditional;
 }result;
 
-typedef struct{
-  result results;
-  types units;
-} temps;
 
+char* extractDigits(int* i_ptr, char* input,char* numBuffer)
+{
+    int start = *i_ptr;
+    int numsize = 0;
+    while(checkIfNum(input[*i_ptr]) == 1)
+    {
+      numsize++;
+      *i_ptr = *i_ptr + 1;
+    }
+    strncpy(numBuffer, (input+start), numsize);
 
+    return numBuffer;
+}
 
-void evaluate(char* input,temps* temp){
+int evaluate(char* input,result* res){
   //function does numerical evaluation
   if (*(input++) != '('){ //check value of input, check for open paren, increment by 1
     printf("ERROR: Input must begin with a '('\n");
     printf("ERRORRRRRRR");
-    //return 0;
+    exit(1);
   }
 
   *input = *(input++);
@@ -54,33 +63,30 @@ void evaluate(char* input,temps* temp){
   //bool resultBool;
   switch (operator) {
     case ADD:
-      temp->results.number = compute_ADD(input);
-      temp->units = FLOAT;
+      res->number = compute_ADD(input);
+      return 1;
       break;
     case MUL:
-      temp->results.number = compute_MUL(input);
-      temp->units = FLOAT;
+      res->number = compute_MUL(input);
+      return 1;
       break;
     case DIV:
-      temp->results.number = compute_DIV(input);
-      temp->units = FLOAT;
+      res->number = compute_DIV(input);
+      return 1;
       break;
-    case SUB:
-      temp->results.number = compute_SUB(input);
-      temp->units = FLOAT;
+    case  SUB:
+      res->number = compute_SUB(input);
+      return 1;
       break;
     case LESS:
-      temp->units = BOOLEAN;
-      temp->results.conditional = cond_LESS(input);
-      break;
+      res->conditional = cond_LESS(input);
+      return 0;
     case GREATER:
-      temp->units = BOOLEAN;
-      temp->results.conditional = cond_GREATER(input);
-      break;
+        res->conditional = cond_GREATER(input);
+        return 0;
     case EQUAL:
-      temp->units = BOOLEAN;
-      temp->results.conditional = cond_EQUAL(input);
-      break;
+        res->conditional = cond_EQUAL(input);
+        return 0;
     default:
       printf("ERROR--NO OPERATOR PROVIDED");
       break;
@@ -103,28 +109,58 @@ int checkIfNum(char num)
 
 bool cond_LESS(char* input)
 {
-  bool result = true;
-  int num1 = input[1]-'0';
-  int num2 = input[3]-'0';
-  if((num1 < num2)){
+  bool result;
+  int i = 0;
+  int* i_ptr = &i;
+  int nums[2];
+  int x = 0;
+
+  while (input[i] != ')') {
+    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
+      i++;
+    }
+    else{
+      char* numBuffer = malloc(15*sizeof(char));
+      numBuffer = extractDigits(i_ptr,input,numBuffer);
+      float curr = atof(numBuffer);
+      nums[x] = curr;
+      x++;
+      free(numBuffer);
+  }
+  }
+
+  if((nums[0] < nums[1])){
    result = true;
   }
   else{
    result = false;
   }
-  // printf(result ? "true" : "false");
-
   return result;
 }
-
 
 bool cond_GREATER(char* input)
 {
   bool result;
+  int i = 0;
+  int* i_ptr = &i;
+  int nums[2];
+  int x = 0;
 
-  int num1 = input[1]-'0';
-  int num2 = input[3]-'0';
-  if((num1 > num2)){
+  while (input[i] != ')') {
+    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
+      i++;
+    }
+    else{
+      char* numBuffer = malloc(15*sizeof(char));
+      numBuffer = extractDigits(i_ptr,input,numBuffer);
+      float curr = atof(numBuffer);
+      nums[x] = curr;
+      x++;
+      free(numBuffer);
+  }
+}
+
+  if((nums[0] > nums[1])){
    result = true;
   }
   else{
@@ -135,12 +171,27 @@ bool cond_GREATER(char* input)
 
 bool cond_EQUAL(char* input)
 {
-
   bool result;
-  //printf("%s\n", input);
-  int num1 = input[1]-'0';
-  int num2 = input[3]-'0';
-  if((num1 == num2)){
+  int i = 0;
+  int* i_ptr = &i;
+  int nums[2];
+  int x = 0;
+
+  while (input[i] != ')') {
+    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
+      i++;
+    }
+    else{
+      char* numBuffer = malloc(15*sizeof(char));
+      numBuffer = extractDigits(i_ptr,input,numBuffer);
+      float curr = atof(numBuffer);
+      nums[x] = curr;
+      x++;
+      free(numBuffer);
+  }
+}
+
+  if((nums[0] == nums[1])){
    result = true;
   }
   else{
@@ -149,24 +200,20 @@ bool cond_EQUAL(char* input)
   return result;
 }
 
+
+
 float compute_ADD(char* input){
   float sum = 0;
   int i = 0;
+  int* i_ptr = &i;
 
   while (input[i] != ')') {
     if (isspace(input[i]) || checkIfNum(input[i])==0)  {
       i++;
     }
     else{
-      int start = i;
-      int numsize = 0;
-      while(checkIfNum(input[i])==1)
-      {
-        numsize++;
-        i++;
-      }
       char* numBuffer = malloc(15*sizeof(char));
-      strncpy(numBuffer, (input+start), numsize);
+      numBuffer = extractDigits(i_ptr,input,numBuffer);
       float curr = atof(numBuffer);
       sum = sum + curr;
       free(numBuffer);
@@ -178,20 +225,15 @@ float compute_ADD(char* input){
   float compute_SUB(char* input){
     float difference = 0;
     int i = 0;
+    int* i_ptr = &i;
     int first = 0;
-    while (input[i] != ')') {
-    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
+    while (input[*i_ptr] != ')') {
+    if (isspace(input[*i_ptr]) || checkIfNum(input[*i_ptr])==0)  {
       i++;
     }
     else{
-      int start = i;
-      int numsize = 0;
-      while(checkIfNum(input[i])==1){
-        numsize++;
-        i++;
-      }
       char* numBuffer = malloc(15*sizeof(char));
-      strncpy(numBuffer, (input+start), numsize);
+      numBuffer = extractDigits(i_ptr,input,numBuffer);
       float curr = atof(numBuffer);
       if (first != 0)
         curr = (-1.0)*curr;
@@ -206,21 +248,14 @@ float compute_ADD(char* input){
   float compute_MUL(char* input) {
     float product = 1;
     int i = 0;
-
-  while (input[i] != ')') {
-    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
+    int* i_ptr = &i;
+   while (input[i] != ')') {
+     if (isspace(input[i]) || checkIfNum(input[i])==0)  {
       i++;
     }
     else{
-      int start = i;
-      int numsize = 0;
-      while(checkIfNum(input[i])==1)
-      {
-        numsize++;
-        i++;
-      }
       char* numBuffer = malloc(15*sizeof(char));
-      strncpy(numBuffer, (input+start), numsize);
+      numBuffer = extractDigits(i_ptr,input,numBuffer);
       float curr = atof(numBuffer);
       product = product * curr;
       free(numBuffer);
@@ -231,23 +266,16 @@ float compute_ADD(char* input){
 
   float compute_DIV(char* input) {
     float quotient = 1.0;
-    int i = 0;
+     int i = 0;
+    int* i_ptr = &i;
     int first = 0;
-
     while (input[i] != ')') {
     if (isspace(input[i]) || checkIfNum(input[i])==0)  {
       i++;
     }
     else{
-      int start = i;
-      int numsize = 0;
-      while(checkIfNum(input[i])==1)
-      {
-        numsize++;
-        i++;
-      }
       char* numBuffer = malloc(15*sizeof(char));
-      strncpy(numBuffer, (input+start), numsize);
+      numBuffer = extractDigits(i_ptr,input,numBuffer);
       float curr = atof(numBuffer);
       if (first != 0)
         curr = 1.0 / curr;
@@ -366,22 +394,23 @@ int main(int argc, char** argv) {
   //Loop prints out all the inputs
 
   result *res = malloc(sizeof(float));
-  temps *temp = malloc(sizeof(float) * 10 );
-
+  int temp;
   while(numInputs>0)
   {
-    evaluate(inputs[i], temp);
-    if (temp->units == BOOLEAN){
-      if(temp->results.conditional = 1)
-          printf("True\n");
-      else
-          printf("False\n" );
+    temp = evaluate(inputs[i],res);
+    if (temp == 1){
+      //printf("float");
+      printf("%f\n",res->number);
     }
-    else if(temp->units == FLOAT){
-      printf("float");
-      printf("%f\n",temp->results.number);
-      printf("%d\n",temp->results.conditional);
-
+    else if(temp == 0){
+      if (res->conditional)
+      {
+        printf("True\n");
+      }
+      else{
+        printf("False\n");
+      }
+      //printf("%d\n",res->conditional);
     }
       //printf("%s\n", inputs[i]);
        i++;

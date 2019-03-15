@@ -34,6 +34,11 @@ typedef union result{
   bool conditional;
 }result;
 
+typedef struct temps{
+  result results;
+  types units;
+}temps;
+
 
 char* read_input(){
 //function reads user input and returns pointer to the input string
@@ -86,10 +91,10 @@ int evaluate(char* input,result* res){
       res->conditional = cond_LESS(input);
       return 0;
     case GREATER:
-        res->conditional = cond_GREATER(input);
+      res->conditional = cond_GREATER(input);
         return 0;
     case EQUAL:
-        res->conditional = cond_EQUAL(input);
+      res->conditional = cond_EQUAL(input);
         return 0;
     default:
       printf("ERROR--NO OPERATOR PROVIDED");
