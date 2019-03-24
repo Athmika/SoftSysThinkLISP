@@ -35,6 +35,11 @@ typedef union result{
   bool conditional;
 }result;
 
+typedef struct{
+  result results;
+  types units;
+} temps;
+
 
 char* extractDigits(int* i_ptr, char* input,char* numBuffer)
 {
@@ -50,45 +55,47 @@ char* extractDigits(int* i_ptr, char* input,char* numBuffer)
     return numBuffer;
 }
 
-int evaluate(char* input,result* res){
+void evaluate(char* input,temps* temp){
   //function does numerical evaluation
   if (*(input++) != '('){ //check value of input, check for open paren, increment by 1
     printf("ERROR: Input must begin with a '('\n");
-    printf("ERRORRRRRRR");
     exit(1);
+    //return 0;
   }
-
-  *input = *(input++);
-  char operator = *input; //read the operator
+  //*input = *(input++);
+  char operator = input[0]; //read the operator
   //bool resultBool;
   switch (operator) {
     case ADD:
-      res->number = compute_ADD(input);
-      return 1;
+      temp->results.number = compute_ADD(input);
+      temp->units = FLOAT;
       break;
     case MUL:
-      res->number = compute_MUL(input);
-      return 1;
+      temp->results.number = compute_MUL(input);
+      temp->units = FLOAT;
       break;
     case DIV:
-      res->number = compute_DIV(input);
-      return 1;
+      temp->results.number = compute_DIV(input);
+      temp->units = FLOAT;
       break;
-    case  SUB:
-      res->number = compute_SUB(input);
-      return 1;
+    case SUB:
+      temp->results.number = compute_SUB(input);
+      temp->units = FLOAT;
       break;
     case LESS:
-      res->conditional = cond_LESS(input);
-      return 0;
+      temp->units = BOOLEAN;
+      temp->results.conditional = cond_LESS(input);
+      break;
     case GREATER:
-        res->conditional = cond_GREATER(input);
-        return 0;
+      temp->units = BOOLEAN;
+      temp->results.conditional = cond_GREATER(input);
+      break;
     case EQUAL:
-        res->conditional = cond_EQUAL(input);
-        return 0;
+      temp->units = BOOLEAN;
+      temp->results.conditional = cond_EQUAL(input);
+      break;
     default:
-      printf("ERROR--NO OPERATOR PROVIDED");
+      cond(input);
       break;
   }
 }
@@ -291,51 +298,67 @@ float compute_ADD(char* input){
 int cond(char* input)
 {
 
-  char* firstsubstr = malloc(3*sizeof(char));
-  strncpy(firstsubstr, (input+1), 2);
-
+  char* firstsubstr = malloc(4*sizeof(char));
+  strncpy(firstsubstr, (input), 2);
   char* secondsubstr = malloc(15*sizeof(char));
+  strncpy(secondsubstr, (input+2), strlen(input)-2);
 
-  strncpy(secondsubstr, (input+3), strlen(input)-3);
-
-  //printf("%s\n", substr);
+  float nums[2];
   //char firstChar = input[0];
+  int index = 0;
   if (strcmp(firstsubstr,"if") == 0) {
+
+    char cmpOperator = secondsubstr[2];
     int i = 0;
+    int* i_ptr = &i;
     //skip forward until you hit the first comparator operator
-    while (isspace(secondsubstr[0]) || secondsubstr[0] == '(')
+
+    while (secondsubstr[i] != ')') {
+    if (isspace(secondsubstr[i]) || checkIfNum(secondsubstr[i]) == 0)
     {
-      secondsubstr = secondsubstr + 1;
-      i =+ 1;
+      i++;
       //nextChar = secondsubstr[i];
     }
-
-    char cmpOperator = secondsubstr[0];
+    else{
+    printf("%s\n",secondsubstr);
 
     //need to error check to make sure these are actually ints
-    int num1 = secondsubstr[2]-'0';
-    int num2 = secondsubstr[4]-'0';
+    char* numBuffer = malloc(15*sizeof(char));
+    numBuffer = extractDigits(i_ptr,secondsubstr,numBuffer);
+    nums[index] = atof(numBuffer);
 
+    if (index>2)
+    {
+      printf("ERROR: IF CONDITION CAN ONLY COMPARE 2 NUMBERS\n");
+    }
+
+    index++;
+   }
+   }
+  printf("%f\n",nums[1]);
     if (cmpOperator == '<')
     {
-        if (num1 < num2) {printf("true\n");}
+        if (nums[0] < nums[1]) {printf("true\n");}
     }
     else if (cmpOperator == '>')
     {
-        if (num1 > num2) {printf("true\n");}
+        if (nums[0] > nums[1]) {printf("true\n");}
     }
     else if (cmpOperator == '=')
     {
-        if (num1 == num2) {printf("true\n");}
+        if (nums[0] == nums[1]) {printf("true\n");}
     }
     else{
-        printf("Invalid comparision operator");
+        printf("ERROR: Invalid comparision operator\n");
      }
 
   }
-
+else{
+  printf("ERROR: COMMAND NOT RECOGNIZED. OPERATOR (+,-,/,*,<,>,=) OR CONDITIONAL(if) NOT provided");
+}
 return 0;
 }
+
 
 int main(int argc, char** argv) {
 
@@ -394,23 +417,22 @@ int main(int argc, char** argv) {
   //Loop prints out all the inputs
 
   result *res = malloc(sizeof(float));
-  int temp;
+  temps *temp = malloc(sizeof(float) * 10 );
+
   while(numInputs>0)
   {
-    temp = evaluate(inputs[i],res);
-    if (temp == 1){
-      //printf("float");
-      printf("%f\n",res->number);
+
+    evaluate(inputs[i], temp);
+
+    if (temp->units == BOOLEAN){
+      if(temp->results.conditional = 1)
+          printf("True\n");
+      else
+          printf("False\n" );
     }
-    else if(temp == 0){
-      if (res->conditional)
-      {
-        printf("True\n");
-      }
-      else{
-        printf("False\n");
-      }
-      //printf("%d\n",res->conditional);
+    else if(temp->units == FLOAT){
+      printf("%f\n",temp->results.number);
+
     }
       //printf("%s\n", inputs[i]);
        i++;
