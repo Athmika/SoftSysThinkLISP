@@ -40,6 +40,22 @@ typedef struct{
   types units;
 } temps;
 
+void extractCommand(char* input, char* command, int* end)
+{
+    int i = 0;
+    int start;
+    while (input[i] != ')') {
+      if (input[i] == '(')
+      {
+        start = i;
+      }
+      i++;
+    }
+    *end = i+1;
+
+    strncpy(command, (input+start), i);
+
+}
 
 char* extractDigits(int* i_ptr, char* input,char* numBuffer)
 {
@@ -50,7 +66,7 @@ char* extractDigits(int* i_ptr, char* input,char* numBuffer)
       numsize++;
       *i_ptr = *i_ptr + 1;
     }
-    strncpy(numBuffer, (input+start), numsize);
+   strncpy(numBuffer, (input+start), numsize);
 
     return numBuffer;
 }
@@ -95,7 +111,7 @@ void evaluate(char* input,temps* temp){
       temp->results.conditional = cond_EQUAL(input);
       break;
     default:
-      cond(input);
+      cond(input,temp);
       break;
   }
 }
@@ -295,7 +311,7 @@ float compute_ADD(char* input){
     }
 
 
-int cond(char* input)
+int cond(char* input, temps* temp)
 {
 
   char* firstsubstr = malloc(4*sizeof(char));
@@ -320,8 +336,6 @@ int cond(char* input)
       //nextChar = secondsubstr[i];
     }
     else{
-    printf("%s\n",secondsubstr);
-
     //need to error check to make sure these are actually ints
     char* numBuffer = malloc(15*sizeof(char));
     numBuffer = extractDigits(i_ptr,secondsubstr,numBuffer);
@@ -335,18 +349,29 @@ int cond(char* input)
     index++;
    }
    }
-  printf("%f\n",nums[1]);
+
+    int* end = malloc(5);
+    char* command1 = malloc(15*sizeof(secondsubstr));
+    extractCommand(secondsubstr+i+1,command1,end);
+
+
+    char* command2 = malloc(15*sizeof(secondsubstr));
+    extractCommand(secondsubstr+i+(*end+1),command2,end);
+    //printf("%s\n",command2);
+
+
+
     if (cmpOperator == '<')
     {
-        if (nums[0] < nums[1]) {printf("true\n");}
+        if (nums[0] < nums[1]) {evaluate(command1,temp);} else {evaluate(command2,temp);}
     }
     else if (cmpOperator == '>')
     {
-        if (nums[0] > nums[1]) {printf("true\n");}
+        if (nums[0] > nums[1]) {evaluate(command1,temp);} else {evaluate(command2,temp);}
     }
     else if (cmpOperator == '=')
     {
-        if (nums[0] == nums[1]) {printf("true\n");}
+        if (nums[0] == nums[1]) {evaluate(command1,temp);} else {evaluate(command2,temp);}
     }
     else{
         printf("ERROR: Invalid comparision operator\n");
