@@ -1,4 +1,9 @@
-#include "conditionals.h"
+#include "helper_functions.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
 
 #define ADD '+'
 #define SUB '-'

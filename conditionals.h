@@ -1,4 +1,24 @@
 #include "helper_functions.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
+
+typedef enum{
+  FLOAT, BOOLEAN
+} types;
+
+typedef union result{
+  float number;
+  bool conditional;
+}result;
+
+typedef struct{
+  result results;
+  types units;
+} temps;
+
 
 #define LESS '<'
 #define GREATER '>'
@@ -9,111 +29,4 @@ bool cond_GREATER();
 bool cond_EQUAL();
 int checkIfNum(char);
 void if_cond();
-
-
-int checkIfNum(char num)
-{
-  char nums[10] = {'0','1','2','3','4','5','6','7','8','9'};
-  int i = 0;
-  for(i=0;i<10;i++)
-  {
-    if (num == nums[i])
-    {
-      return 1;
-    }
-  }
-  return 0;
-}
-
-bool cond_LESS(char* input)
-{
-  bool result;
-  int i = 0;
-  int* i_ptr = &i;
-  int nums[2];
-  int x = 0;
-
-  while (input[i] != ')') {
-    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
-      i++;
-    }
-    else{
-      char* numBuffer = malloc(15*sizeof(char));
-      numBuffer = extractDigits(i_ptr,input,numBuffer);
-      float curr = atof(numBuffer);
-      nums[x] = curr;
-      x++;
-      free(numBuffer);
-  }
-  }
-
-  if((nums[0] < nums[1])){
-   result = true;
-  }
-  else{
-   result = false;
-  }
-  return result;
-}
-
-bool cond_GREATER(char* input)
-{
-  bool result;
-  int i = 0;
-  int* i_ptr = &i;
-  int nums[2];
-  int x = 0;
-
-  while (input[i] != ')') {
-    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
-      i++;
-    }
-    else{
-      char* numBuffer = malloc(15*sizeof(char));
-      numBuffer = extractDigits(i_ptr,input,numBuffer);
-      float curr = atof(numBuffer);
-      nums[x] = curr;
-      x++;
-      free(numBuffer);
-  }
-}
-
-  if((nums[0] > nums[1])){
-   result = true;
-  }
-  else{
-   result = false;
-  }
-  return result;
-}
-
-bool cond_EQUAL(char* input)
-{
-  bool result;
-  int i = 0;
-  int* i_ptr = &i;
-  int nums[2];
-  int x = 0;
-
-  while (input[i] != ')') {
-    if (isspace(input[i]) || checkIfNum(input[i])==0)  {
-      i++;
-    }
-    else{
-      char* numBuffer = malloc(15*sizeof(char));
-      numBuffer = extractDigits(i_ptr,input,numBuffer);
-      float curr = atof(numBuffer);
-      nums[x] = curr;
-      x++;
-      free(numBuffer);
-  }
-}
-
-  if((nums[0] == nums[1])){
-   result = true;
-  }
-  else{
-   result = false;
-  }
-  return result;
-}
+void evaluate();

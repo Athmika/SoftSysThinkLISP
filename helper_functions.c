@@ -1,3 +1,5 @@
+#include "helper_functions.h"
+
 void extractCommand(char* input, char* command, int* end)
 {
     int i = 0;
@@ -27,4 +29,18 @@ char* extractDigits(int* i_ptr, char* input,char* numBuffer)
    strncpy(numBuffer, (input+start), numsize);
 
     return numBuffer;
+}
+
+int checkIfNum(char num)
+{
+  char nums[10] = {'0','1','2','3','4','5','6','7','8','9'};
+  int i = 0;
+  for(i=0;i<10;i++)
+  {
+    if (num == nums[i])
+    {
+      return 1;
+    }
+  }
+  return 0;
 }

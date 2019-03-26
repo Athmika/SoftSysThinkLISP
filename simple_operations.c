@@ -1,3 +1,5 @@
+#include "simple_operations.h"
+
 float compute_ADD(char* input){
   float sum = 0;
   int i = 0;

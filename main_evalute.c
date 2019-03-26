@@ -4,21 +4,8 @@
 #include <string.h>
 #include <ctype.h>
 #include "simple_operations.h"
+#include "conditionals.h"
 
-
-typedef enum{
-  FLOAT, BOOLEAN
-} types;
-
-typedef union result{
-  float number;
-  bool conditional;
-}result;
-
-typedef struct{
-  result results;
-  types units;
-} temps;
 
 void evaluate(char* input,temps* temp){
   //function does numerical evaluation
