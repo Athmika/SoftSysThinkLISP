@@ -23,6 +23,7 @@ bool cond_LESS();
 bool cond_GREATER();
 bool cond_EQUAL();
 int checkIfNum(char);
+void if_cond();
 
 int isspace();
 
@@ -111,7 +112,7 @@ void evaluate(char* input,temps* temp){
       temp->results.conditional = cond_EQUAL(input);
       break;
     default:
-      cond(input,temp);
+      if_cond(input,temp);
       break;
   }
 }
@@ -311,7 +312,7 @@ float compute_ADD(char* input){
     }
 
 
-int cond(char* input, temps* temp)
+void if_cond(char* input, temps* temp)
 {
 
   char* firstsubstr = malloc(4*sizeof(char));
@@ -381,7 +382,6 @@ int cond(char* input, temps* temp)
 else{
   printf("ERROR: COMMAND NOT RECOGNIZED. OPERATOR (+,-,/,*,<,>,=) OR CONDITIONAL(if) NOT provided");
 }
-return 0;
 }
 
 
