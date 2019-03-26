@@ -450,7 +450,7 @@ int main(int argc, char** argv) {
     evaluate(inputs[i], temp);
 
     if (temp->units == BOOLEAN){
-      if(temp->results.conditional = 1)
+      if(temp->results.conditional == 1)
           printf("True\n");
       else
           printf("False\n" );

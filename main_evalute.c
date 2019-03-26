@@ -2,8 +2,23 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
+#include "simple_operations.h"
 
-void evalute();
+
+typedef enum{
+  FLOAT, BOOLEAN
+} types;
+
+typedef union result{
+  float number;
+  bool conditional;
+}result;
+
+typedef struct{
+  result results;
+  types units;
+} temps;
 
 void evaluate(char* input,temps* temp){
   //function does numerical evaluation
@@ -52,7 +67,7 @@ void evaluate(char* input,temps* temp){
 
 
 
-nt main(int argc, char** argv) {
+int main(int argc, char** argv) {
 
   /* Print Version and Exit Information */
  char *inputs[101];
@@ -117,7 +132,7 @@ nt main(int argc, char** argv) {
     evaluate(inputs[i], temp);
 
     if (temp->units == BOOLEAN){
-      if(temp->results.conditional = 1)
+      if(temp->results.conditional == 1)
           printf("True\n");
       else
           printf("False\n" );
