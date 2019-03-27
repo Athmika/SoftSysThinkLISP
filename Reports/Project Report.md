@@ -86,8 +86,8 @@ Depending on the type of operation, the evaluation function is housed in a diffe
 
 #### Error Checking 
 The following pictures are few errors we have implemented in our project: 
-![Error1](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Error1.jpg)
 <br/>
+![Error1](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Error1.jpg)
 <br/>
 ![Error2](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Error2.jpg)
 
