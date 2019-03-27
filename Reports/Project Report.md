@@ -28,7 +28,7 @@ The following resources were used for the project: <br/>
 Our prompt allows the users to enter multiple commands in one execution. We set an arbitrary maximum of a 100 commands that 
 can be executed in one execution. We decided that the most intuitive way of exiting the prompt is for the user to press enter
 with a blank line. This is done by applying the following condition on a while loop: ```while (1 == scanf("%[^\n]%*c", s))```.
-The prompt removes the leading spaces in the commands that are entered by leveraging the isspace() function. This ensures 
+The prompt removes the leading spaces in the commands that are entered by leveraging the ```isspace()``` function. This ensures 
 that accidental spaces that are entered are ignored and commands can still be executed. 
 
 ### Parsing 
