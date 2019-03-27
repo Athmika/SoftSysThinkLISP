@@ -1,5 +1,12 @@
 #include "conditionals.h"
 
+/*
+cond_LESS: when a command of the form (< num1 num2) is input, this function returns a boolean result
+
+PARAMETERS
+input: char pointer
+*/
+
 bool cond_LESS(char* input)
 {
   bool result;
@@ -30,6 +37,13 @@ bool cond_LESS(char* input)
   }
   return result;
 }
+
+/*
+cond_GREATER:  when a command of the form (> num1 num2) is input, this function returns a boolean result
+
+PARAMETERS
+input: char pointer
+*/
 
 bool cond_GREATER(char* input)
 {
@@ -62,6 +76,13 @@ bool cond_GREATER(char* input)
   return result;
 }
 
+/*
+cond_EQUAL: when a command of the form (= num1 num2) is input, this function returns a boolean result
+
+PARAMETERS
+input: char pointer
+*/
+
 bool cond_EQUAL(char* input)
 {
   bool result;
@@ -81,8 +102,8 @@ bool cond_EQUAL(char* input)
       nums[x] = curr;
       x++;
       free(numBuffer);
-  }
-}
+      }
+    }
 
   if((nums[0] == nums[1])){
    result = true;
@@ -93,7 +114,18 @@ bool cond_EQUAL(char* input)
   return result;
 }
 
-void if_cond(char* input, temps* temp)
+/*
+if_cond: when a command of the form (if (test_clause) (command1) (command2)) is input, this function calls evaluate on command1 if the test_clause is true or
+command2 if the test_clause is false.
+
+PARAMETERS
+input: char pointer
+data: pointer to a struct of type outputWithUnits
+
+*/
+
+
+void if_cond(char* input, outputWithUnits* data)
 {
 
   char* firstsubstr = malloc(4*sizeof(char));
@@ -102,23 +134,19 @@ void if_cond(char* input, temps* temp)
   strncpy(secondsubstr, (input+2), strlen(input)-2);
 
   float nums[2];
-  //char firstChar = input[0];
   int index = 0;
   if (strcmp(firstsubstr,"if") == 0) {
 
     char cmpOperator = secondsubstr[2];
     int i = 0;
     int* i_ptr = &i;
-    //skip forward until you hit the first comparator operator
 
     while (secondsubstr[i] != ')') {
     if (isspace(secondsubstr[i]) || checkIfNum(secondsubstr[i]) == 0)
     {
       i++;
-      //nextChar = secondsubstr[i];
     }
     else{
-    //need to error check to make sure these are actually ints
     char* numBuffer = malloc(15*sizeof(char));
     numBuffer = extractDigits(i_ptr,secondsubstr,numBuffer);
     nums[index] = atof(numBuffer);
@@ -126,6 +154,7 @@ void if_cond(char* input, temps* temp)
     if (index>2)
     {
       printf("ERROR: IF CONDITION CAN ONLY COMPARE 2 NUMBERS\n");
+      exit(1);
     }
 
     index++;
@@ -139,28 +168,28 @@ void if_cond(char* input, temps* temp)
 
     char* command2 = malloc(15*sizeof(secondsubstr));
     extractCommand(secondsubstr+i+(*end+1),command2,end);
-    //printf("%s\n",command2);
-
 
 
     if (cmpOperator == '<')
     {
-        if (nums[0] < nums[1]) {evaluate(command1,temp);} else {evaluate(command2,temp);}
+        if (nums[0] < nums[1]) {evaluate(command1,data);} else {evaluate(command2,data);}
     }
     else if (cmpOperator == '>')
     {
-        if (nums[0] > nums[1]) {evaluate(command1,temp);} else {evaluate(command2,temp);}
+        if (nums[0] > nums[1]) {evaluate(command1,data);} else {evaluate(command2,data);}
     }
     else if (cmpOperator == '=')
     {
-        if (nums[0] == nums[1]) {evaluate(command1,temp);} else {evaluate(command2,temp);}
+        if (nums[0] == nums[1]) {evaluate(command1,data);} else {evaluate(command2,data);}
     }
     else{
         printf("ERROR: Invalid comparision operator\n");
+        exit(1);
      }
-
   }
-else{
-  printf("ERROR: COMMAND NOT RECOGNIZED. OPERATOR (+,-,/,*,<,>,=) OR CONDITIONAL(if) NOT provided");
-}
+
+  else{
+      printf("ERROR: COMMAND NOT RECOGNIZED. OPERATOR (+,-,/,*,<,>,=) OR CONDITIONAL(if) NOT provided");
+      exit(1);
+    }
 }

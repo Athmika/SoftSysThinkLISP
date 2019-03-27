@@ -17,7 +17,7 @@ typedef union result{
 typedef struct{
   result results;
   types units;
-} temps;
+} outputWithUnits;
 
 
 #define LESS '<'
