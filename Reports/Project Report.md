@@ -2,23 +2,12 @@
 ### Team members: Hyegi Bang, Abigail Fry and Athmika Senthilkumar
 
 ## Project Vision
-For the project, we will be creating a minimal lisp interpreter in C. Our MVP should be able to accurately carryout all 
-comparison and numerical lisp operations. For example, ```(+ 1 2 3)``` should evaluate to ```6```, ```(= 11 11)``` should evaluate to true, 
-```(> 1 11)``` should evaluate to false and so on. Our MVP should also be able to evaluate conditional expressions that take this 
-form: ```(if (condition) (action1) (action2))```. If the given condition result true, the ```action1``` operation would be performed and 
-if false, ```action2``` would be operated. 
-
-Since working on our MVP, we have decided to pivot our stretch goal.  Originally our stretch goal was to to include additional
-lisp functionality like processing loops and handling logical operations.  Instead we have decided to focus on making our basic
-mathematical operations more robust.  We have finished addition, subtraction, multiplication, and division for multiple digits,
-doing a single operation.  We are interested in being able to compute something more complication like ```(+ 2(/ 8 (- 8 6)))```.
-We think this goal build off of the work we have already done better than our original stretch goal and is one that we are
-more interested in pursuing.
+For the project, we created a minimal LISP interpreter in C. Our MVP was tp be able to accurately carryout all comparison and numerical LISP operations. For example, ```(+ 1 2 3)``` should evaluate to ```6```, ```(= 11 11)``` should evaluate to true, ```(> 1 11)``` should evaluate to false and so on. Our MVP also includes evaluating conditional expressions that take this form: ```(if (condition) (action1) (action2))```. If the given condition result true, the action1 operation would be performed and if false, ```action2``` would be operated. 
+Just before the project update, we decided to pivot our stretch goal.  Originally our stretch goal was to to include additional LISP functionality like processing loops and handling logical operations.  Instead we have decided to focus on making our basic mathematical operations more robust.  We have finished addition, subtraction, multiplication, and division for multiple digits, doing a single operation.  We are interested in being able to compute something more complication like ```(+ 2(/ 8 (- 8 6)))```.  We thought this goal would build off of the work we have already done better than our original stretch goal an was one we are more interested in pursuing.
+Our other stretch goal was to have the interpreter read and store variables for future operation. For example, ```(setq y 5)``` should set the value 5 to the variable ```y``` and ```(+ y 3)``` would output ```6```. 
 
 ### Learning Goal
-As a team, we hope to get more comfortable with C syntax and C coding practices. We want to explore how an interpreted language
-like lisp functions on a system level in comparison with C  And as we work on this project, we also hope to develop good
-practices for coding in a team, that includes maintaining an up to date trello and using GitHub effectively. 
+As a team, we hope to get more comfortable with C syntax and C coding practices. We want to explore how an interpreted language like lisp functions on a system level in comparison with C  And as we work on this project, we also hope to develop good practices for coding in a team, that includes maintaining an up to date trello and using GitHub effectively. 
 
 ### Project Workflow
 Majority of the work was done through pair programming during our two weekly meetings. We often coded and debugged on one 
@@ -79,25 +68,27 @@ Depending on the type of operation, the evaluation function is housed in a diffe
 
 ## Results
 #### Simple Operations  
-![SimpleOp](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/simpleop.jpg)
+![op](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/op.png)
 
-Syntax for input ([operator] num1 num2 num3 …..)
+```Syntax for input ([operator] num1 num2 num3 …..)```
 
 #### Comparison
 ![Conditional](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Conditional.jpg)
 
-Syntax for input ([operator] num1 num2)
+```Syntax for input ([operator] num1 num2)```
 
 
 #### Conditional
 ![if](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/if.jpg)
 
-Syntax for input (if (test_clause) (command1) (command2))
+```Syntax for input (if (test_clause) (command1) (command2))```
 
 
 #### Error Checking 
 The following pictures are few errors we have implemented in our project: 
 ![Error1](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Error1.jpg)
+<br/>
+<br/>
 ![Error2](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Error2.jpg)
 
 ## Next Steps 
@@ -107,5 +98,5 @@ The following pictures are few errors we have implemented in our project:
 
 ## Project Reflection 
 
-As a team, we were able to build upon the material covered in-class and implement it in the specific context of our project. This helped us to solidify our understanding and also gain more confidence coding in C.  It was interesting to learn about LISP and then chose specific parts of LISP to include in our interpreter.  In hindsight, we wish we would have learned more about LISP before making our MVP.  As we got deeper into the project we became more interested in making the mathematical operations be able to do nested operations.  This caused us to pivot our stretch goal half-way through the project, away from implementing for loops in Lisp.  However, we were still only able to attempt our new stretch goal and fell short of full implementation.  Overall, the project was a good learning experience and enjoyable.
+As a team, we were able to build upon the material covered in-class and implement it in the specific context of our project. This helped us to solidify our understanding and also gain more confidence coding in C.  It was interesting to learn about LISP and then chose specific parts of LISP to include in our interpreter.  In hindsight, we wish we would have learned more about LISP before making our MVP.  As we got deeper into the project we became more interested in making the mathematical operations be able to do nested operations. This caused us to pivot our stretch goal half-way through the project, away from implementing For Loops in Lisp.  However, we were still only able to attempt our new stretch goal and fell short of full implementation.  We also didn’t implement our reading and storing variables stretch goal.  Instead, we decided to focus on adding error checking.  Overall, the project was a good learning experience and enjoyable.
 
