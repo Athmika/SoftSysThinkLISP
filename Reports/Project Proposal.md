@@ -1,6 +1,6 @@
-			                 Lisp Interpreter
+# Lisp Interpreter
 
-Team members: Abigail Fry, Hyegi Bang and Athmika Senthilkumar
+## Team members: Abigail Fry, Hyegi Bang and Athmika Senthilkumar
 
 **Goal of our project**: 
 
