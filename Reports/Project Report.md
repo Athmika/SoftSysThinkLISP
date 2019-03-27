@@ -46,6 +46,8 @@ that accidental spaces that are entered are ignored and commands can still be ex
 
 Because we wanted to improve our skills manipulating strings in C, we decided not to use external libraries and instead parsed the input manually. We included error checking to make sure that certain syntax errors are identified and the program exits.  
 
+We have attempted to implement a tree structure as a way to parse. This allows for nested commands like this (+ (+ 3 4) 5) to be evaluated. The operators are stored as a parent and the numbers are stored as a children. If the input contains more than one operator, a subtree will be created with its own following children. However, when we integrated the with the prompt function we had, It gave us a segmentation fault and we could not track the errors. 
+
 
 ### Evaluation
 ```
@@ -70,24 +72,40 @@ By using an enum in a struct with our union, it allowed us to keep track of the 
 
 ### Organization
 
+Depending on the type of operation, the evaluation function is housed in a different file. As seen in the diagram below, main_evaluate.c depends on simple_operations.c and conditionals.c which in turn depend on the helper_functions.c file. 
+
+![Diagram](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/diagram.png)
+
 
 ## Results
 #### Simple Operations  
 ![SimpleOp](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/simpleop.jpg)
 
+Syntax for input ([operator] num1 num2 num3 …..)
+
 #### Comparison
 ![Conditional](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Conditional.jpg)
+
+Syntax for input ([operator] num1 num2)
+
 
 #### Conditional
 ![if](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/if.jpg)
 
-#### Error Checking
+Syntax for input (if (test_clause) (command1) (command2))
+
+
+#### Error Checking 
+The following pictures are few errors we have implemented in our project: 
 ![Error1](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Error1.jpg)
 ![Error2](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Error2.jpg)
 
 ## Next Steps 
 * Add more robust error cases
-* Implement nested evaluation 
-* 
+* Implement nested parser using tree 
+* Explore additional LISP functionality and implement in our project
 
 ## Project Reflection 
+
+As a team, we were able to build upon the material covered in-class and implement it in the specific context of our project. This helped us to solidify our understanding and also gain more confidence coding in C.  It was interesting to learn about LISP and then chose specific parts of LISP to include in our interpreter.  In hindsight, we wish we would have learned more about LISP before making our MVP.  As we got deeper into the project we became more interested in making the mathematical operations be able to do nested operations.  This caused us to pivot our stretch goal half-way through the project, away from implementing for loops in Lisp.  However, we were still only able to attempt our new stretch goal and fell short of full implementation.  Overall, the project was a good learning experience and enjoyable.
+
