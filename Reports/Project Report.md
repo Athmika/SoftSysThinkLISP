@@ -44,6 +44,9 @@ that accidental spaces that are entered are ignored and commands can still be ex
 
 ### Parsing 
 
+Because we wanted to improve our skills manipulating strings in C, we decided not to use external libraries and instead parsed the input manually. We included error checking to make sure that certain syntax errors are identified and the program exits.  
+
+
 ### Evaluation
 ```
 typedef enum{
@@ -65,10 +68,26 @@ The Lisp commands that we choose to implement can output either a float or a Boo
 store our result. However, in order to format our output we needed to know the type of value that is stored in the union. 
 By using an enum in a struct with our union, it allowed us to keep track of the type of value that is stored in the union. 
 
-### Modular Programming 
+### Organization
+
 
 ## Results
+#### Simple Operations  
+![SimpleOp](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/simpleop.jpg)
+
+#### Comparison
+![Conditional](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Conditional.jpg)
+
+#### Conditional
+![if](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/if.jpg)
+
+#### Error Checking
+![Error1](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Error1.jpg)
+![Error2](https://github.com/Athmika/SoftSysThinkLISP/blob/master/images/Error2.jpg)
 
 ## Next Steps 
+* Add more robust error cases
+* Implement nested evaluation 
+* 
 
 ## Project Reflection 
